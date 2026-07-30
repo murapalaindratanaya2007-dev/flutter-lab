@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.blue.shade100,
+        appBar: AppBar(
+          title: Text("Row and Stack Example"),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Text(
+                "Row with 3 Icons",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              Container(
+                width: 250,
+                height: 70,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+
+                    Icon(
+                      Icons.home,
+                      size: 40,
+                      color: Colors.blue,
+                    ),
+
+                    Icon(
+                      Icons.favorite,
+                      size: 40,
+                      color: Colors.red,
+                    ),
+
+                    Icon(
+                      Icons.person,
+                      size: 40,
+                      color: Colors.green,
+                    ),
+
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 50),
+
+              Text(
+                "Stack Example",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              Stack(
+                alignment: Alignment.center,
+                children: [
+
+                  Container(
+                    width: 220,
+                    height: 220,
+                    color: Colors.blue,
+                  ),
+
+                  Container(
+                    width: 120,
+                    height: 120,
+                    color: Colors.orange,
+                    child: Center(
+                      child: Text(
+                        "Top",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
