@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: EnableDisableExample(),
+    );
+  }
+}
+
+class EnableDisableExample extends StatefulWidget {
+  const EnableDisableExample({super.key});
+
+  @override
+  State<EnableDisableExample> createState() =>
+      _EnableDisableExampleState();
+}
+
+class _EnableDisableExampleState
+    extends State<EnableDisableExample> {
+  bool isEnabled = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Enable/Disable Example")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: isEnabled
+                  ? () {
+                      print("Button Clicked");
+                    }
+                  : null, // Disabled when null
+              child: const Text("Submit"),
+            ),
+            const SizedBox(height: 20),
+            Switch(
+              value: isEnabled,
+              onChanged: (value) {
+                setState(() {
+                  isEnabled = value;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
