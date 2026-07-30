@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: CounterApp(),
+    ),
+  );
+}
+
+class CounterApp extends StatefulWidget {
+  @override
+  State<CounterApp> createState() {
+    return _CounterAppState();
+  }
+}
+
+class _CounterAppState extends State<CounterApp> {
+
+  int count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue.shade100,
+
+      appBar: AppBar(
+        title: Text("Counter App"),
+      ),
+
+      body: Center(
+        child: Container(
+          width: 250,
+          height: 250,
+          color: Colors.white,
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Text(
+                "Count",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 15),
+
+              Text(
+                "$count",
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 30),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        count--;
+                      });
+                    },
+                    child: Text("-"),
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        count++;
+                      });
+                    },
+                    child: Text("+"),
+                  ),
+
+                ],
+              ),
+
+              SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    count = 0;
+                  });
+                },
+                child: Text("Reset"),
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+}
