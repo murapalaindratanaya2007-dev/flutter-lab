@@ -1,0 +1,234 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHome(),
+    ),
+  );
+}
+
+class MyHome extends StatefulWidget {
+  @override
+  State<MyHome> createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+  String selectedPage = "Home";
+
+  // Content for each page
+  Widget getPageContent() {
+    switch (selectedPage) {
+      case "Home":
+        return pageContent(
+          Icons.home,
+          "Welcome to Home",
+          "This is the home page. Here you can see the main content of the application.",
+        );
+
+      case "Profile":
+        return pageContent(
+          Icons.person,
+          "Profile Details",
+          "Name: John Doe\n"
+              "Email: johndoe@example.com\n"
+              "Age: 25\n"
+              "Location: Chennai",
+        );
+
+      case "Settings":
+        return pageContent(
+          Icons.settings,
+          "Settings",
+          "Example Settings:\n\n"
+              "• Change password\n"
+              "• Enable notifications\n"
+              "• Change theme\n"
+              "• Manage account",
+        );
+
+      case "About":
+        return pageContent(
+          Icons.info,
+          "About",
+          "This is a responsive Flutter application.\n\n"
+              "It works on mobile, tablet, and desktop screens. "
+              "You can use the menu to navigate between different sections.",
+        );
+
+      default:
+        return pageContent(
+          Icons.home,
+          "Welcome to Home",
+          "This is the home page.",
+        );
+    }
+  }
+
+  Widget pageContent(IconData icon, String title, String description) {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(30),
+        margin: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 70,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              description,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void selectPage(String page) {
+    setState(() {
+      selectedPage = page;
+    });
+
+    // Close drawer on mobile
+    if (MediaQuery.of(context).size.width < 600) {
+      Navigator.pop(context);
+    }
+  }
+
+  Widget menuItem(IconData icon, String title) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: selectedPage == title ? Colors.blue : Colors.black87,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight:
+              selectedPage == title ? FontWeight.bold : FontWeight.normal,
+          color: selectedPage == title ? Colors.blue : Colors.black87,
+        ),
+      ),
+      selected: selectedPage == title,
+      onTap: () {
+        selectPage(title);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Responsive UI"),
+        backgroundColor: Colors.blue,
+      ),
+
+      // Mobile Drawer
+      drawer: width < 600
+          ? Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Menu",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  menuItem(Icons.home, "Home"),
+                  menuItem(Icons.person, "Profile"),
+                  menuItem(Icons.settings, "Settings"),
+                  menuItem(Icons.info, "About"),
+                ],
+              ),
+            )
+          : null,
+
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoRWKA-ZJkPVUBJp4YTrcOm7ah5MrnbtNUAvHnr07vQA&s=10",
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        child: width < 600
+            ? getPageContent()
+            : Row(
+                children: [
+                  // Desktop / Tablet Sidebar
+                  Container(
+                    width: 220,
+                    color: Colors.white.withOpacity(0.9),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 30),
+
+                        Text(
+                          "MENU",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+
+                        SizedBox(height: 20),
+
+                        menuItem(Icons.home, "Home"),
+                        menuItem(Icons.person, "Profile"),
+                        menuItem(Icons.settings, "Settings"),
+                        menuItem(Icons.info, "About"),
+                      ],
+                    ),
+                  ),
+
+                  // Main Content
+                  Expanded(
+                    child: getPageContent(),
+                  ),
+                ],
+              ),
+      ),
+    );
+  }
+}
