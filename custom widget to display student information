@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(
+      backgroundColor: Colors.purple.shade100,
+      appBar: AppBar(
+        title: Text("Student Information"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            StudentCard(
+              name: "indra",
+              branch: "CSE",
+              cgpa: "9.44",
+              icon: Icons.person,
+            ),
+            StudentCard(
+              name: "pavan",
+              branch: "ECE",
+              cgpa: "8.75",
+              icon: Icons.person,
+            ),
+            StudentCard(
+              name: "arjun",
+              branch: "IT",
+              cgpa: "9.10",
+              icon: Icons.person,
+            ),
+          ],
+        ),
+      ),
+    ),
+  ));
+}
+
+class StudentCard extends StatelessWidget {
+  final String name;
+  final String branch;
+  final String cgpa;
+  final IconData icon;
+
+  StudentCard({
+    required this.name,
+    required this.branch,
+    required this.cgpa,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 5,
+            offset: Offset(2, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 50,
+            color: Colors.deepPurple,
+          ),
+          SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Name: $name",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "Branch: $branch",
+                style: TextStyle(fontSize: 18),
+              ),
+              Text(
+                "CGPA: $cgpa",
+                style: TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
