@@ -1,0 +1,300 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: StudentDetails(),
+  ));
+}
+
+class StudentDetails extends StatefulWidget {
+  @override
+  State<StudentDetails> createState() => _StudentDetailsState();
+}
+
+class _StudentDetailsState extends State<StudentDetails> {
+  TextEditingController name1 = TextEditingController();
+  TextEditingController branch1 = TextEditingController();
+  TextEditingController cgpa1 = TextEditingController();
+
+  TextEditingController name2 = TextEditingController();
+  TextEditingController branch2 = TextEditingController();
+  TextEditingController cgpa2 = TextEditingController();
+
+  TextEditingController name3 = TextEditingController();
+  TextEditingController branch3 = TextEditingController();
+  TextEditingController cgpa3 = TextEditingController();
+
+  bool showCards = false;
+
+  Widget inputField(
+      String label, TextEditingController controller, IconData icon) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: Icon(icon),
+          filled: true,
+          fillColor: Colors.grey.shade100,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget studentInput(
+      String title,
+      TextEditingController name,
+      TextEditingController branch,
+      TextEditingController cgpa) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade400,
+            blurRadius: 6,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,
+            ),
+          ),
+          SizedBox(height: 12),
+
+          inputField("Student Name", name, Icons.person),
+          inputField("Branch", branch, Icons.school),
+          inputField("CGPA", cgpa, Icons.star),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.purple.shade50,
+
+      appBar: AppBar(
+        title: Text("Student Profile"),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+      ),
+
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(18),
+
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+
+              Text(
+                "Enter Student Details",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 5),
+
+              Text(
+                "Enter details for three students",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade700,
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              studentInput(
+                "Student 1",
+                name1,
+                branch1,
+                cgpa1,
+              ),
+
+              studentInput(
+                "Student 2",
+                name2,
+                branch2,
+                cgpa2,
+              ),
+
+              studentInput(
+                "Student 3",
+                name3,
+                branch3,
+                cgpa3,
+              ),
+
+              SizedBox(height: 5),
+
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      showCards = true;
+                    });
+                  },
+                  icon: Icon(Icons.visibility),
+                  label: Text(
+                    "DISPLAY STUDENT CARDS",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 25),
+
+              if (showCards) ...[
+                Text(
+                  "Student Profiles",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                SizedBox(height: 10),
+
+                StudentCard(
+                  name: name1.text,
+                  branch: branch1.text,
+                  cgpa: cgpa1.text,
+                  icon: Icons.person,
+                ),
+
+                StudentCard(
+                  name: name2.text,
+                  branch: branch2.text,
+                  cgpa: cgpa2.text,
+                  icon: Icons.person,
+                ),
+
+                StudentCard(
+                  name: name3.text,
+                  branch: branch3.text,
+                  cgpa: cgpa3.text,
+                  icon: Icons.person,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+// CUSTOM REUSABLE WIDGET
+
+class StudentCard extends StatelessWidget {
+  final String name;
+  final String branch;
+  final String cgpa;
+  final IconData icon;
+
+  StudentCard({
+    required this.name,
+    required this.branch,
+    required this.cgpa,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.all(18),
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 7,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 28,
+            backgroundColor: Colors.deepPurple.shade100,
+            child: Icon(
+              icon,
+              size: 32,
+              color: Colors.deepPurple,
+            ),
+          ),
+
+          SizedBox(width: 18),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 5),
+
+              Text(
+                "Branch: $branch",
+                style: TextStyle(fontSize: 16),
+              ),
+
+              Text(
+                "CGPA: $cgpa",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
